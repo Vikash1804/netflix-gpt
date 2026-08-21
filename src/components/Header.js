@@ -1,33 +1,50 @@
-import { getAuth, signOut } from 'firebase/auth';
-import React from 'react'
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import {  useNavigate } from 'react-router-dom';
+import { adduser, removeuser } from '../utils/UserSlice';
+import { auth } from '../utils/firebase';
+import { app_logo, USER_LOGO } from '../utils/Constants';
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector(store => store.user);
-
-console.log("HEADER USER:", user);
-  const naviagte = useNavigate();
+ 
   const handleClick = ()=>{
     const auth = getAuth();
   signOut(auth).then(() => {
-    naviagte("/");
 
-  // Sign-out successful.
 }).catch((error) => {
-  // An error happened.
+ 
 });
+
   }
+
+  useEffect(()=>{
+     onAuthStateChanged(auth, (user) => {
+        if (user) {
+        const {email , uid , displayName}= user;
+         dispatch(adduser({email : email , uid : uid , displayName : displayName}));
+         navigate("/browse")
+       } else {
+
+    dispatch(removeuser());
+    navigate("/")
+    // ...
+  }
+});
+    },[])
   return (
     <div className="  w-screen absolute px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between">
       <img
-        src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
+        src={app_logo}
         alt="Netflix Logo"
         className="w-44"
       />
       {user &&(
       <div className='felx'>
-      <img className='w-14' src='https://imgs.search.brave.com/T9PZOvRozceMFZ0S8Ohs4TUe-si7wgdJUEOZKYnKEqM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuaWNvbi1pY29u/cy5jb20vMTE4Mi9Q/TkcvOTYvMTQ5MDEy/OTMyOS1yb3VuZGVk/MzhfODIyMDMucG5n'/>   
+      <img className='w-14' src={USER_LOGO}/>   
       <button  onClick={handleClick}>Sign Out</button>
       </div>)
 }

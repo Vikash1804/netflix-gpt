@@ -1,0 +1,3 @@
+export const USER_LOGO ="https://imgs.search.brave.com/T9PZOvRozceMFZ0S8Ohs4TUe-si7wgdJUEOZKYnKEqM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuaWNvbi1pY29u/cy5jb20vMTE4Mi9Q/TkcvOTYvMTQ5MDEy/OTMyOS1yb3VuZGVk/MzhfODIyMDMucG5n";
+export const app_logo ="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg";
+export const background_img = "https://assets.nflxext.com/ffe/siteui/vlv3/ea534f76-b87f-4720-9605-cb29cfd9fefe/web/IN-en-20260810-TRIFECTA-perspective_5a83c581-2878-466b-87a0-19d0bf50f4bc_small.jpg";
